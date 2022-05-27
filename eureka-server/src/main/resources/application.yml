@@ -1,0 +1,15 @@
+server:
+  port: 8001
+
+spring:
+  application:
+    name: eureka-server
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    fetch-registry: false # disable fetching registry from eureka server
+    register-with-eureka: false # disable registering with eureka server
+  server:
+    enable-self-preservation: false # disable self preservation

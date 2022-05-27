@@ -1,0 +1,14 @@
+server:
+  port: 8103
+
+spring:
+  application:
+    name: eureka-client
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      # eureka server registry url, enable security framework, need username and password
+      defaultZone: http://hazy:hazy@localhost:8004/eureka/

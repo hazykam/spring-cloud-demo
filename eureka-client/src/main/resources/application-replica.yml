@@ -1,0 +1,13 @@
+server:
+  port: 8102
+
+spring:
+  application:
+    name: eureka-client
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8002/eureka/,http://localhost:8003/eureka/ # eureka server registry cluster url
