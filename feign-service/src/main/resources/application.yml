@@ -1,0 +1,19 @@
+server:
+  port: 8701
+
+spring:
+  application:
+    name: feign-service
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8001/eureka/
+
+feign:
+  circuitbreaker:
+    enabled: true # feign 开启断路器功能支持
+
+logging:
+  level:
+    com.example.service.UserService: debug # 配置 UserService 的日志级别
