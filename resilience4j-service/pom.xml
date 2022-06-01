@@ -27,7 +27,8 @@
         </dependency>
 
         <!--
-            使用 resilience4j 必须引入 AOP，否则断路器不会生效。
+            resilience4j 基于动态代理实现，由于本身没有将 AOP 依赖进来，
+            在使用 resilience4j 时必须自己引入 AOP，否则断路器不会生效。
         -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

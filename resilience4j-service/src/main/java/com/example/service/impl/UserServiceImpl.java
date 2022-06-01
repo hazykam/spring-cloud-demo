@@ -39,10 +39,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @CircuitBreaker(name = "myFallback", fallbackMethod = "fallback")
     public CommonResult byId(Long id) {
-        // 通过关闭 user-service 服务或除零，测试熔断
+        // 通过关闭 user-service 服务，测试熔断
         CommonResult result = restTemplate.getForObject(userServiceUrl.concat("/user/id/").concat(id.toString()), CommonResult.class);
 
-//        int a = 1 / 0;
         logger.info("用户服务调用成功，返回信息：{}", result);
         return result;
     }
