@@ -1,0 +1,21 @@
+server:
+  port: 8801
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true # 开启网关功能，通过服务注册中心自动创建路由
+      routes: # 路由组，可以有多个
+        - id: user-proxy-route  # 路由id
+          uri: lb://user-service  # 路由路径，使用 lb:// 作为前缀时会调用 loadbalancer 自动实现对应服务的负载均衡
+          predicates: # 谓词组，即路由条件组，可以有多个，每个项的格式为使用 “=” 隔开的键值对
+            - Path=/user-proxy/,/user-route/  # Path：路径匹配模式，可以为多个，当匹配到请求路径开头为设定的值时，则会被转发到指定的路由路径
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8001/eureka/
