@@ -30,7 +30,7 @@ public class UserFeignController {
     /**
      * 当对 Service 接口实现了 fallback 熔断处理类时；
      * 单独使用 @Autowired 注解时 IDEA 会报错，但不影响 Service 和 断路器 正常运行；
-     * 可以使用 @Qualifier 指定具体的 Bean 实例，也可以使用 @Resource 代替 @Autowired，都不会影响正常运行。
+     * 可以使用 @Qualifier 指定主 Service Bean 实例，也可以使用 @Resource 代替 @Autowired，都不会影响正常运行。
      */
     @Resource
     private UserService userService;
