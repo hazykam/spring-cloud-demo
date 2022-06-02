@@ -3,8 +3,7 @@ package com.example.service.fallback;
 import com.example.domain.CommonResult;
 import com.example.domain.User;
 import com.example.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,28 +14,27 @@ import org.springframework.stereotype.Component;
  * @Date 2022/6/1 16:16
  * @Version 1.0
  **/
+@Slf4j
 @Component
 public class UserServiceFallback implements UserService {
-
-    Logger logger = LoggerFactory.getLogger(UserServiceFallback.class);
 
     @Override
     public CommonResult byId(Long id) {
         CommonResult<User> fallback = new CommonResult<>("用户服务当前不可用", CommonResult.FAIL);
-        logger.error("用户服务不可用，进入降级方法，返回：{}", fallback);
+        log.error("用户服务不可用，进入降级方法，返回：{}", fallback);
 
         return fallback;
     }
 
     @Override
     public CommonResult list() {
-        logger.error("用户服务不可用，进入降级方法");
+        log.error("用户服务不可用，进入降级方法");
         return new CommonResult<>("用户服务当前不可用", CommonResult.FAIL);
     }
 
     @Override
     public CommonResult create(User user) {
-        logger.error("用户服务不可用，进入降级方法");
+        log.error("用户服务不可用，进入降级方法");
         return new CommonResult<>("用户服务当前不可用", CommonResult.FAIL);
     }
 
