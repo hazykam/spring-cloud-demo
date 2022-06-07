@@ -1,21 +1,47 @@
 server:
   port: 8801
 
-spring:
-  application:
-    name: api-gateway
-  cloud:
-    gateway:
-      discovery:
-        locator:
-          enabled: true # 开启网关功能，通过服务注册中心自动创建路由
-      routes: # 路由组，可以有多个
-        - id: user-proxy-route  # 路由id
-          uri: lb://user-service  # 路由路径，使用 lb:// 作为前缀时会调用 loadbalancer 自动实现对应服务的负载均衡
-          predicates: # 谓词组，即路由条件组，可以有多个，每个项的格式为使用 “=” 隔开的键值对
-            - Path=/user-proxy/,/user-route/  # Path：路径匹配模式，可以为多个，当匹配到请求路径开头为设定的值时，则会被转发到指定的路由路径
-
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8001/eureka/
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway: # p.s. gateway 的大部分配置在更改后都需要重启服务才会生效
+#      httpclient:
+#        connect-timeout: 1000 # 连接超时配置，单位ms
+#        response-timeout: 5s # 响应超时配置
+#      globalcors: # 全局跨域配置
+#        cors-configurations:
+#          '[/**]':
+#            allowedOrigins: "*"
+#            allowedHeaders: "*"
+#            allowedMethod: "*"
+#      discovery:
+#        locator:
+#          enabled: true # 启用服务注册，通过服务注册中心自动创建路由，使其可以通过服务名称访问
+      routes: # 路由组，可以有多个项
+        - id: user-proxy-route # 路由项id
+          uri: lb://user-service # 路由路径，当路由配置中 uri 所用的协议为 lb 时，gateway 将使用 LoadBalancerClient 把服务名称通过 eureka 解析为实际的主机和端口，并进行负载均衡。
+          predicates: # 谓词/断言组，即路由条件组，每个项的格式为使用 “=” 隔开的键值对
+            - Path=/user-proxy/**,/user-route/** # Path：路径匹配模式，多个用逗号隔开，当匹配到请求路径开头为设定的值时，则会被转发到指定的路由路径
+          filters: # 过滤器组
+            # StripPrefix，意为剥除路径前缀，设定的值表示转发时会剥除几层路径前缀；
+            # 不设置时，默认会将接收到的路径完整转发到目标服务中，比如匹配路径为/user-proxy，那么转发到目标服务时也会携带这个/user-proxy；
+            - StripPrefix=1
+            - PrefixPath=/user # PrefixPath，路径前缀，该配置会使请求路径转发到目标服务时，自动加上配置的前缀路径；
+        - id: feign-proxy-route
+          uri: lb://feign-service
+          predicates:
+            - Path=/feign-proxy/**
+          filters:
+            - StripPrefix=1
+
+management:
+  endpoints:
+    web: # actuator web 端点，用于通过请求查看服务应用信息
+      exposure: # 暴露端点配置
+        include: gateway # 需要被暴露的端点，多个使用逗号隔开，设为 "*" 时暴露所有端点
