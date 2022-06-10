@@ -1,0 +1,31 @@
+server:
+  port: 8904
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.91chi.fun/https://github.com/graytang/{application}
+          search-paths: '{application}'
+          skip-ssl-validation: true
+          strict-host-key-checking: false
+          timeout: 30
+  rabbitmq: # RabbitMQ 相关配置
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8001/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: busrefresh # 暴露总线刷新配置端点，spring cloud 2020.0.0 起，bus-refresh 端点名称更改为 busrefresh
