@@ -8,7 +8,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.91chi.fun/https://github.com/graytang/{application}
+          uri: https://github.com/graytang/{application}
           search-paths: '{application}'
           skip-ssl-validation: true
           strict-host-key-checking: false
