@@ -1,0 +1,35 @@
+server:
+  port: 8901
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8001/eureka/
+
+# 远程配置访问路径：
+#
+# /{application}/{profile}[/{label}]
+# /{application}-{profile}.yml
+# /{label}/{application}-{profile}.yml
+# /{application}-{profile}.properties
+# /{label}/{application}-{profile}.properties
+#
+# {application} 应用名称，对应配置文件的主名称部分
+# {profile} 配置文件扩展名前用 “-” 隔开的后缀，表示作用的环境，如 dev、test/sit、prod
+# {label} 分支名称，如 master、dev
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          # 远程配置仓库地址，可以使用 {application}/{profile}/{label} 占位符；
+          # 使用占位符后，具体的值会在其他服务连接到配置中心服务时动态获取。
+          uri: https://github.com/graytang/{application}
+          search-paths: '{application}' # 远程仓库中配置文件的所在路径，只使用占位符时需要用引号引起来，否则会因为 yml 格式不合法无法解析
+          skip-ssl-validation: true
+          strict-host-key-checking: false
+          timeout: 60
+#          clone-on-start: true # 启动服务时从远程仓库 clone 配置文件，默认为 false，如果需要在 uri 使用占位符时需要禁用该属性

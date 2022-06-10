@@ -1,0 +1,23 @@
+server:
+  port: 8905
+
+spring:
+  application:
+    name: config-security-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/graytang/{application}
+          search-paths: '{application}'
+          timeout: 30
+          skip-ssl-validation: true
+          strict-host-key-checking: false
+  security:
+    user:
+      name: hazy
+      password: 123
+
+#logging:
+#  level:
+#    root: debug

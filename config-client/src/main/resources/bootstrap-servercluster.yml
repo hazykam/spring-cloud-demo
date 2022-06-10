@@ -1,0 +1,22 @@
+server:
+  port: 9003
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8001/eureka
+
+spring:
+  application:
+    name: config-client
+  cloud:
+    config:
+      discovery:
+        # 是否从服务注册中心获取配置中心服务
+        # p.s. 使用服务发现获取配置中心服务时必须使用 bootstrap 引导配置
+        # 如果使用 application 作为配置会导致激活配置冲突从而引起远程配置无法加载，导致服务启动失败
+        enabled: true
+        service-id: config-server # 指定配置中心服务名
+      label: master
+      name: ${spring.application.name}
+      profile: dev

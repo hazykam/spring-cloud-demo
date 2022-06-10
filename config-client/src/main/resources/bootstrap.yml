@@ -1,0 +1,25 @@
+server:
+  port: 9001
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8001/eureka
+
+spring:
+  application:
+    name: config-client
+  profiles:
+    active: dev
+  cloud:
+    config:
+      uri: http://localhost:8902
+      label: master # 远程配置仓库中的分支名称
+      name: ${spring.application.name} # 配置文件名称，该属性的值可被配置中心服务中的 {application} 占位符读取
+      profile: ${spring.profiles.active} # 配置文件作用环境
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
