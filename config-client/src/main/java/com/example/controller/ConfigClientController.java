@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/config")
 public class ConfigClientController {
+
     @Value("${config.info}")
     private String configInfo;
 
