@@ -3,7 +3,12 @@ server:
 
 spring:
   application:
-    name: user-service  # \u5E94\u7528\u670D\u52A1\u540D\u79F0
+    name: user-service
+  zipkin:
+    base-url: http://localhost:9411 # 指定 zipkin web 访问地址
+  sleuth:
+    sampler:
+      probability: 0.1 # sleuth 的抽样收集概率
 
 eureka:
   client:
