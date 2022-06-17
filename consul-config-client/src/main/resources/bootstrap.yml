@@ -1,0 +1,22 @@
+server:
+  port: 9101
+
+spring:
+  application:
+    name: consul-config-client
+#  profiles:
+#    active: dev
+  cloud:
+    consul:
+      discovery:
+        service-name: ${spring.application.name}
+      config: # consul 配置中心相关配置
+        enabled: true # 启用配置中心，默认为 true
+        format: yaml # 配置的格式，默认为 key_value
+        prefixes: # 配置根目录，默认为 Collections.singletonList("config")，实例：config/
+          - config
+        default-context: ${spring.application.name} # 跟随在根目录后的路径，用于标识不同应用的配置，默认为 application，通常使用具体的应用名称，实例：config/application-name
+        profile-separator: '::' # 配置文件名称分隔符，存在多个不同环境的 profile 时用于区分不同的 profile，默认为 ","，实例：config/application-name{separator}profile/
+        # consul 中的配置存储方式为 K/V pair，value 为配置，使用对应的 key 获取
+        # 如果 format 为 properties 或 yaml，该属性的值则作为获取配置的 key，默认为 data，实例：config/application-name{separator}profile/data
+        data-key: data
