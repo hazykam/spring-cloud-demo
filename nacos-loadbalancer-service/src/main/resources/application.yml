@@ -1,0 +1,25 @@
+server:
+  port: 8309
+
+spring:
+  application:
+    name: nacos-loadbalancer-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+
+
+# 自定义配置
+custom-service-url:
+  # 服务提供地址，"user-service" 是服务提供模块中配置的应用名称
+  # spring cloud 会根据应用名称从服务注册中心自动获取对应的服务地址，并自动实现负载均衡
+  # 默认的负载均衡策略为轮询
+  user-service: http://nacos-user-service
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

@@ -1,0 +1,18 @@
+server:
+  port: 9102
+
+spring:
+  application:
+    name: nacos-config-client
+#  profiles:
+#    active: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+      config:
+        # nacos 服务端配置 Data Id 格式：${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+        # nacos 服务端编辑配置文件并发布后，会自动刷新客户端配置
+        server-addr: localhost:8848
+        file-extension: yaml # 指定远程配置文件格式为 yaml
+
