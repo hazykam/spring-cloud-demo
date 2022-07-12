@@ -62,11 +62,9 @@ public class UserController {
     public CommonResult<User> get(@PathVariable Long id) {
         User user = userService.byId(id);
         log.info("根据 ID 获取用户信息，用户信息：{}", user);
-        if (user != null) {
-            return new CommonResult<>(user);
-        }
+        assert user != null;
 
-        return new CommonResult<>("查询失败", CommonResult.FAIL);
+        return new CommonResult<>(user);
     }
 
     @GetMapping("/username/{username}")
