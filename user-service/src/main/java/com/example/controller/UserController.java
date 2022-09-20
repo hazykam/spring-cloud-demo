@@ -17,12 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * @ClassName UserController
- * @Description TODO
- * @Author Gray
- * @Date 2022/5/30 10:08
- * @Version 1.0
- **/
+ * @author Gray
+ */
 @Slf4j
 @RestController
 @RequestMapping("/user")
@@ -33,6 +29,7 @@ public class UserController {
 
     @PostMapping("/create")
     public CommonResult<User> create(@RequestBody User user) {
+        log.info("创建用户：{}", user);
         if (userService.create(user)) {
             return new CommonResult<>(user);
         }
